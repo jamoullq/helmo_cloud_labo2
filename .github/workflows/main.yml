@@ -31,3 +31,12 @@ jobs:
         run: python3 helloworld.py
       - name: build docker
         run: docker build -t helloworld-app -f ./Dockerfile .
+      - name: Scan image
+        uses: Azure/container-scan@v0
+        with:
+          image-name: helloworld-app
+          severity-threshold: CRITICAL
+          run-quality-checks: true
+      - name: Push image
+        run: |
+        docker push helloworld-app
