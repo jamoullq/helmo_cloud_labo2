@@ -31,6 +31,12 @@ jobs:
         run: python3 helloworld.py
       #- name: build docker
       #  run: docker build -t helloworld-app -f ./Dockerfile .
+      - name: Login to the Container Registry  
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.ACR_LOGIN_SERVER }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
       - name: Build and Tag image
         run: |
           docker build -f ./Dockerfile -t ${{ secrets.ACR_LOGIN_SERVER }}/spring-petclinic:${{ github.run_number }} .
